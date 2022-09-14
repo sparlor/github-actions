@@ -15,7 +15,11 @@ jobs:
           - 5432:5432
     steps:
       - name: POST product
-      - run: curl --location --request POST 'localhost:8000/api/' --form 'title="Apple"' --form 'description="fruit"' --form 'price="$0.99"'
+        run: curl --location --request POST 'localhost:8000/api/' --form 'title="Apple"' --form 'description="fruit"' --form 'price="$0.99"'
+
+      - name: GET product
+        run: curl --location --request GET 'localhost:8000/api/'
+
     # container: 
     #   image: node:18-alpine3.15
       # ports:
