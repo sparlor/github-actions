@@ -32,7 +32,6 @@ jobs:
         env: 
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_MESSAGE: "Spamming from a tutorial I am working on!"
-
   node-docker:
     runs-on: ubuntu-latest
     services:
@@ -51,16 +50,16 @@ jobs:
       - name: GET product
         run: curl --location --request GET 'localhost:8000/api/'
 
-    container: 
-      image: node:18-alpine3.15
-      ports:
-      volumes:
-      env:
-      options: --cpus 1 --host
-    steps:
-      - name: Log node version
-        run: |
-          node -v
-          cat /etc/os-release
+    # container: 
+    #   image: node:18-alpine3.15
+    #   ports:
+    #   volumes:
+    #   env:
+    #   options: --cpus 1 --host
+    # steps:
+    #   - name: Log node version
+    #     run: |
+    #       node -v
+    #       cat /etc/os-release
 
-          # curl localhost:8000/api --location --request GET 'localhost:8000/api'
+    #       # curl localhost:8000/api --location --request GET 'localhost:8000/api'
