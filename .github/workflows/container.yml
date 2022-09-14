@@ -15,6 +15,11 @@ jobs:
         with:
           entrypoint: '/bin/echo'
           args: 'hello world'
+      - name: Log node version
+        uses: docker://node:18-buster
+        with:
+          entrypoint: /usr/local/bin/node
+          args: -v
 
   node-docker:
     runs-on: ubuntu-latest
