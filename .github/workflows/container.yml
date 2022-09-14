@@ -4,8 +4,20 @@ on: push
 jobs:
   node-docker:
     runs-on: ubuntu-latest
-    container: 
-      image: node:18-alpine3.15
+    services:
+      app:
+        image: scottyfullstack/basic-rest-api:latest
+        ports:
+          - 8000:8000
+      postgres:
+        image: postgres:12
+        ports: 
+          - 5432:5432
+    steps:
+      - name: POST product
+      - run: curl --location --request POST 'localhost:8000/api/' --form 'title="Apple"' --form 'description="fruit"' --form 'price="$0.99"'
+    # container: 
+    #   image: node:18-alpine3.15
       # ports:
       # volumes:
       # env:
@@ -15,3 +27,5 @@ jobs:
         run: |
           node -v
           cat /etc/os-release
+
+          # curl localhost:8000/api --location --request GET 'localhost:8000/api'
