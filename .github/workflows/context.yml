@@ -1,5 +1,5 @@
 name: Context testing
-on: push
+on: [push, pull_request]
 
 jobs:
   functions:
@@ -13,14 +13,20 @@ jobs:
           echo ${{ format( 'Hello {0} {1} {2}', 'World', '!', '!' ) }}
   one:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
     steps:
       - name: Dump GitHub context
         id: github_context_step
         run: echo '${{ toJSON(github) }}'
+
       - name: Dump job context
+        if: failure()
         run: echo '${{ toJSON(job) }}'
+
       - name: Dump steps context
+        if: always()
         run: echo '${{ toJSON(steps) }}'
+        
       - name: Dump runner context
         run: echo '${{ toJSON(runner) }}'
       - name: Dump strategy context
