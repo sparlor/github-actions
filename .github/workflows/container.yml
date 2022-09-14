@@ -22,10 +22,10 @@ jobs:
       # volumes:
       # env:
       # options: --cpus 1 --host
-    steps: 
-      - name: Log node version
-        run: |
-          node -v
-          cat /etc/os-release
+    # steps:
+    #   - name: Log node version
+    #     run: |
+    #       node -v
+    #       cat /etc/os-release
 
-          # curl localhost:8000/api --location --request GET 'localhost:8000/api'
+    #       # curl localhost:8000/api --location --request GET 'localhost:8000/api'
