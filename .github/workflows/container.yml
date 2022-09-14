@@ -7,19 +7,19 @@ jobs:
     container:
       image: node:14-bullseye
     steps:
-      # - name: log node version
-      #   run: node -v
+      - name: log node version
+        run: node -v
 
-      # - name: step with docker
-      #   uses: docker://node:18-buster
-      #   with:
-      #     entrypoint: '/bin/echo'
-      #     args: 'hello world'
-      # - name: Log node version
-      #   uses: docker://node:18-buster
-      #   with:
-      #     entrypoint: /usr/local/bin/node
-      #     args: -v
+      - name: step with docker
+        uses: docker://node:18-buster
+        with:
+          entrypoint: '/bin/echo'
+          args: 'hello world'
+      - name: Log node version
+        uses: docker://node:18-buster
+        with:
+          entrypoint: /usr/local/bin/node
+          args: -v
       - uses: actions/checkout@v1
       - name: Run a script
         uses: docker://node:18-buster
@@ -27,34 +27,40 @@ jobs:
           entrypoint: ./script.sh
           args: "Some string"
 
-  # node-docker:
-  #   runs-on: ubuntu-latest
-  #   services:
-  #     app:
-  #       image: scottyfullstack/basic-rest-api:latest
-  #       ports:
-  #         - 8000:8000
-  #     postgres:
-  #       image: postgres:12
-  #       ports: 
-  #         - 5432:5432
-  #   steps:
-  #     - name: POST product
-  #       run: curl --location --request POST 'localhost:8000/api/' --form 'title="Apple"' --form 'description="fruit"' --form 'price="$0.99"'
+      - name: Alert to slack
+        uses: docker://technosophos/slack-notify
+        env: 
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: "Spamming from a tutorial I am working on!"
 
-  #     - name: GET product
-  #       run: curl --location --request GET 'localhost:8000/api/'
+  node-docker:
+    runs-on: ubuntu-latest
+    services:
+      app:
+        image: scottyfullstack/basic-rest-api:latest
+        ports:
+          - 8000:8000
+      postgres:
+        image: postgres:12
+        ports: 
+          - 5432:5432
+    steps:
+      - name: POST product
+        run: curl --location --request POST 'localhost:8000/api/' --form 'title="Apple"' --form 'description="fruit"' --form 'price="$0.99"'
 
-    # container: 
-    #   image: node:18-alpine3.15
-      # ports:
-      # volumes:
-      # env:
-      # options: --cpus 1 --host
-    # steps:
-    #   - name: Log node version
-    #     run: |
-    #       node -v
-    #       cat /etc/os-release
+      - name: GET product
+        run: curl --location --request GET 'localhost:8000/api/'
 
-    #       # curl localhost:8000/api --location --request GET 'localhost:8000/api'
+    container: 
+      image: node:18-alpine3.15
+      ports:
+      volumes:
+      env:
+      options: --cpus 1 --host
+    steps:
+      - name: Log node version
+        run: |
+          node -v
+          cat /etc/os-release
+
+          # curl localhost:8000/api --location --request GET 'localhost:8000/api'
