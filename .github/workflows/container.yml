@@ -24,7 +24,7 @@ jobs:
       - name: Run a script
         uses: docker://node:18-buster
         with:
-          entrypoint: ./script.sh
+          entrypoint: $HOME/script.sh
           args: "Some string"
 
   node-docker:
